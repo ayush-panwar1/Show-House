@@ -4,6 +4,7 @@ import CastList from "@/components/CastList";
 import MovieCollectionList from "@/components/MovieListByCollection";
 import TrailerBtn from "@/components/MovieTrailerBtn";
 import Link from "next/link"
+import Footer from "@/components/Footer"
 import type { Metadata } from "next";
 
 
@@ -221,6 +222,7 @@ export default async function MovieDetail({ params }: PageProps) {
             
             <CastList cast={castList} />
             {CollectionID && <MovieCollectionList CollectionID={CollectionID} />}
+            <Footer/>
         </>
     );
 }

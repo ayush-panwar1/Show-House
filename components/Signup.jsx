@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image"
 function Signup() {
   function handleSignup() {
     const params = new URLSearchParams({
@@ -16,8 +16,19 @@ function Signup() {
 
   return (
     <div>
-      <button className="cursor-pointer custom_pill_box " onClick={handleSignup}>
+      <button
+        className="cursor-pointer custom_pill_box"
+        onClick={handleSignup}
+      >
         Signup with Google
+        <Image
+          src="/google-logo.png"
+          alt="Brand Logo"
+          width={35}
+          height={35}
+          style={{ height: "35px", width: "35px" }}
+          // className="object-contain"
+        ></Image>
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 import MoviesListByGenre from "@/components/MoviesListByGenre";
 import Navbar from "@/components/Navbar";
 import Link from "next/link"
+import Footer from "@/components/Footer"
 type PageProps = {
     params: Promise<{
         id: string;
@@ -58,6 +59,7 @@ export default async function MovieByGenre({ params,searchParams }: PageProps) {
             <MoviesListByGenre genreId={id} pageStart= {String(2*Number(pageNumber)-1)} />
         </div>
         <ChangePage pageNo={page} id={id} genre={genre_name} />
+        <Footer/>
 
     </>)
 
