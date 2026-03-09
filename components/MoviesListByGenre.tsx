@@ -19,7 +19,7 @@ async function getMovies({pageStart="1", genreId="28"}: {pageStart: string; genr
   // const URL =
   //   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
-  const URL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageStart}&sort_by=popularity.desc&with_genres=${genreId}`;
+  const URL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&primary_release_date.gte=1985-01-01&page=${pageStart}&sort_by=popularity.desc&with_genres=${genreId}`;
 
     
   // const URL =   "https://api.themoviedb.org/3/discover/movie?with_genres=28";

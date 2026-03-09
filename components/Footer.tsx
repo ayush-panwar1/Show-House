@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "./ThemeButton";
 
 export default function Footer() {
   const Genre = [
@@ -24,7 +25,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-neutral-800 text-neutral-300 h-[200px] mt-4 pt-2">
+    <footer className="bg-neutral-800 text-neutral-300 h-[280px] m-0 pt-6">
       <p>Explore All Genre</p>
       <hr></hr>
       <div className="flex flex-wrap gap-2 justify-center rounded-b-xl py-0 pb-2 pt-2">
@@ -38,6 +39,10 @@ export default function Footer() {
             <div className="custom_pill_box">{g.name}</div>
           </Link>
         ))}
+      </div>
+
+      <div className="flex flex justify-end me-2">
+        <ThemeToggle />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col  md:flex-row justify-between items-center gap-4">

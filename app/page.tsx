@@ -7,11 +7,12 @@ import MoviesByVariant from "@/components/MoviesByVariant";
 // import Image from "next/image"
 // import Link from "next/link"
 import Navbar from "@/components/Navbar";
+
 export default function Home() {
   return (
     <>
       <Navbar />
-     
+      
       <div className="relative h-[200px] md:h-[300px] flex items-center overflow-hidden px-6 md:px-12">
         {/* Background Image */}
         <Image

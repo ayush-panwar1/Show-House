@@ -115,14 +115,16 @@ export default function SearchBox() {
                                 w-[100px] sm:w-[150px]
                                 group-hover:w-[300px] sm:group-hover:w-[500px]
                                 focus:w-[300px] sm:focus:w-[500px]
-                                h-[30px]
-                                px-4 
-                                
+                                h-[35px]
+                                // px-4 
+                                // ps-4
                                 rounded-full
                                 
                                 text-center
                                 transition-all duration-300 ease-in-out
                                 focus:outline-none
+                                pe-0
+                                ps-[25px]
                                 "
                     placeholder="Search"
                     value={searchVal}
