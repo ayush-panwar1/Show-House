@@ -112,9 +112,9 @@ export default function SearchBox() {
                     className="
                                 bg-blue-50
                                 text-slate-800
-                                w-[100px] sm:w-[150px]
-                                group-hover:w-[300px] sm:group-hover:w-[500px]
-                                focus:w-[300px] sm:focus:w-[500px]
+                                w-[90px] sm:w-[150px]
+                                group-hover:w-[150px] md:group-hover:w-[500px]
+                                focus:w-[150px] md:focus:w-[500px]
                                 h-[35px]
                                 // px-4 
                                 // ps-4
@@ -135,7 +135,7 @@ export default function SearchBox() {
                     height={30}
                     width={30}
                     alt="search-icon"
-                    className="bg-blue-50  rounded-full
+                    className="hidden md:block bg-blue-50  rounded-full
                 "
                 ></Image>
 
@@ -150,8 +150,8 @@ export default function SearchBox() {
                             top-full
                             left-0
                             mt-0
-                            w-[300px]
-                            sm:w-[530px]
+                            w-[150px]
+                            md:w-[530px]
                             flex flex-col gap-2
                             bg-slate-50
                             px-3

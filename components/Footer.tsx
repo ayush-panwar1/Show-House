@@ -25,7 +25,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-neutral-800 text-neutral-300 h-[280px] m-0 pt-6">
+    <footer className="bg-neutral-800 text-neutral-300 h-auto m-0 pt-6">
       <p>Explore All Genre</p>
       <hr></hr>
       <div className="flex flex-wrap gap-2 justify-center rounded-b-xl py-0 pb-2 pt-2">

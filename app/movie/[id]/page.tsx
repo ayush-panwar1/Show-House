@@ -136,7 +136,7 @@ export default async function MovieDetail({ params }: PageProps) {
     <>
       <Navbar />
 
-      <div className="overflow-hidden relative flex flex-row gap-0 m-0">
+      <div className="overflow-hidden relative flex flex-row gap-0 px-2  md:px-3">
         {/* 1.bottom banner layer */}
         <Image
           src={bannerPath}
@@ -150,14 +150,14 @@ export default async function MovieDetail({ params }: PageProps) {
         <div className="absolute inset-0 bg-black/70 -z-10" />
 
         {/* 3.main content layer */}
-        <div className="flex justify-between items-between flex-col sm:flex-row w-full gap-[40px]">
+        <div className="flex justify-between  sm:items-between flex-col sm:flex-row w-full gap-[40px]">
           <Image
             src={posterURL}
             alt="Movie poster"
             width={350}
             height={525}
-            // className="m-3  rounded-lg"
-            className="m-3 rounded-lg w-[350px] h-[525px]"
+            
+            className="m-2 w-full max-w-[350px] h-auto self-center  rounded-lg md:w-[350px] md:h-[525px]"
           />
           <div className="flex flex-col  justify-between ">
             {/* text-[min(10vw,35px)] */}
@@ -204,7 +204,7 @@ export default async function MovieDetail({ params }: PageProps) {
 
             <div className="flex justify-between items-between me-2">
               <div className="flex gap-4 items-center mb-3">
-                <h4 className="font-bold text-slate-100 text-[25px] mt-3 mb-0">
+                <h4 className="font-bold text-slate-100 text-[25px] mt-2 mb-2 mb-0">
                   Rating
                 </h4>
                 <RatingBox rating={detail.vote_average} />

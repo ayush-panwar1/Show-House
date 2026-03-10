@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image"
+import Image from "next/image";
 function Signup() {
   function handleSignup() {
     const params = new URLSearchParams({
@@ -16,11 +16,9 @@ function Signup() {
 
   return (
     <div>
-      <button
-        className="cursor-pointer custom_pill_box"
-        onClick={handleSignup}
-      >
-        Signup with Google
+      <button className="cursor-pointer custom_pill_box" onClick={handleSignup}>
+        <div className="hidden md:block">Signup with Google</div>
+
         <Image
           src="/google-logo.png"
           alt="Brand Logo"
