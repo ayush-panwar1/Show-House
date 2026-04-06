@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-function Signup() {
+function GoogleOauth() {
   function handleSignup() {
     const params = new URLSearchParams({
       client_id:
@@ -17,7 +17,7 @@ function Signup() {
   return (
     <div>
       <button className="cursor-pointer custom_pill_box" onClick={handleSignup}>
-        <div className="hidden md:block">Signup with Google</div>
+        <div className="hidden md:block me-2">Continue with Google</div>
 
         <Image
           src="/google-logo.png"
@@ -32,4 +32,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default GoogleOauth;

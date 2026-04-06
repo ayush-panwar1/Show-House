@@ -170,9 +170,9 @@ export default function SearchBox() {
                 {/*  SEARCH RESULTS (TOP PRIORITY) */}
                 {debouncedVal && movieList.length > 0 && (
                     <div className="flex flex-col gap-2 p-2">
-                        {movieList.map((m) => (
+                        {movieList.map((m,i) => (
                             <Link
-                                key={m.id}
+                                key={m.id+i}
                                 href={`/movie/${m.id}`}
                                 className="custom_pill_box"
                             >
@@ -185,9 +185,9 @@ export default function SearchBox() {
                 {/*  GENRES (DEFAULT / FALLBACK) */}
                 {!debouncedVal && (
                     <div className="flex flex-wrap gap-2 justify-center rounded-b-xl py-0 pb-2 pt-2">
-                        {Genre.map((g) => (
+                        {Genre.map((g,i) => (
                             <Link
-                                key={g.id}
+                                key={g.id+i}
                                 href={`/movie/genre/${g.id}/${g.name
                                     .toLowerCase()
                                     .replace(/\s+/g, "-")}?page=1`}

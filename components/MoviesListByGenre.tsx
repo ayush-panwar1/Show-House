@@ -63,7 +63,7 @@ export default async function MoviesListByGenre({pageStart="1", genreId="28"}:{p
   return (
     <div className="my-2">
     {/* <h3 className="dark:text-blue-50 text-3xl align-content-center text-slate-800 m-0 font-bold">Top in Genre</h3> */}
-    <div className="flex overflow-x-scroll sm:flex-wrap align-center justify-center sm:gap-4 ">
+    <div className="flex  sm:flex-wrap align-center justify-center sm:gap-4 ">
         <Suspense fallback={"Loading..."}>
       {movieList.map((movie,idx) => (
         <div key={movie.id+ "-" +idx} className="m-0 p-0">

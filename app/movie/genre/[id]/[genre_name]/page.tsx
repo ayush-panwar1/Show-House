@@ -26,7 +26,7 @@ function ChangePage({
   const baseUrl = `/movie/genre/${id}/${genre.toLowerCase().replace(/\s+/g, "-")}`;
 
   return (
-    <div className="bg-[#01b4e4] dark:bg-[#100953] flex  flex-row justify-center gap-[40px] p-2">
+    <div className="bg-[#00CEC8] dark:bg-[#100953] flex  flex-row justify-center gap-[40px] p-2">
       {/* Prevent going below page 1 */}
       {currentPage > 1 ? (
         <Link
@@ -101,6 +101,7 @@ export default async function MovieByGenre({
           pageStart={String(2 * Number(pageNumber) - 1)}
         />
       </div>
+      <hr></hr>
       <ChangePage pageNo={page} id={id} genre={genre_name} />
       <Footer />
     </>

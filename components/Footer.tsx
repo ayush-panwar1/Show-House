@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeToggle from "./ThemeButton";
+// import ThemeToggle from "./ThemeButton";
 
 export default function Footer() {
   const Genre = [
@@ -41,9 +41,7 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="flex flex justify-end me-2">
-        <ThemeToggle />
-      </div>
+    
 
       <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col  md:flex-row justify-between items-center gap-4">
         <p className="text-sm text-neutral-400">

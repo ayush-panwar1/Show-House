@@ -31,7 +31,7 @@ export default function Home() {
           
           <div className="block">
             <h1 className="text-[clamp(2.7rem,6vw,4.5rem)] font-extrabold tracking-wide text-white">
-              Show<span className="text-[#00bafd]">House</span>
+              Show<span className="text-[#00B9B3]">House</span>
             </h1>
             <p className="mt-1 text-sm uppercase tracking-[0.3em] text-gray-300">
               Discover • Watch • Share
@@ -40,12 +40,12 @@ export default function Home() {
 
           
           <h2 className="hidden lg:block text-right text-[clamp(1.2rem,4vw,2.1rem)] font-light leading-relaxed text-gray-300">
-            See What’s <span className="text-[#30adda]">Trending</span>
+            See What’s <span className="text-[#00CEC8]">Trending</span>
             <br />
-            Decide Your Next <span className="text-[#30adda]">BingeWatch</span>
+            Decide Your Next <span className="text-[#00CEC8]">BingeWatch</span>
             <br />
             Share Your Collection With{" "}
-            <span className="text-[#30adda]">Friends</span>
+            <span className="text-[#00CEC8]">Friends</span>
           </h2>
         </div>
       </div>
