@@ -1,17 +1,25 @@
 import { useForm } from "react-hook-form";
 import GoogleOauth from "./GoogleOauth";
 
-export default function SignUpForm({ onSwitch }) {
+type SignUpFormInputs = {
+  email: string;
+  password: string;
+  confirm_password: string;
+};
+
+type SignUpFormProps = {
+  onSwitch: () => void;
+};
+
+export default function SignUpForm({ onSwitch }: SignUpFormProps) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<SignUpFormInputs>();
 
-  const password = watch("password");
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: SignUpFormInputs) => {
     try {
       const res = await fetch("/api/signup-local", {
         method: "POST",
@@ -57,7 +65,7 @@ export default function SignUpForm({ onSwitch }) {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex flex-col g-3 items-center"
+        className="w-full flex flex-col gap-3 items-center"
       >
         {/* EMAIL */}
         <input
@@ -72,7 +80,7 @@ export default function SignUpForm({ onSwitch }) {
           className="bg-white w-full px-3 py-2 border rounded-full mb-1"
         />
         {errors.email && (
-          <p className=" text-sm mb-2">
+          <p className="text-sm mb-2">
             {errors.email.message}
           </p>
         )}
@@ -91,7 +99,7 @@ export default function SignUpForm({ onSwitch }) {
           className="bg-white w-full px-3 py-2 border rounded-full mb-1"
         />
         {errors.password && (
-          <p className=" text-sm mb-2">
+          <p className="text-sm mb-2">
             {errors.password.message}
           </p>
         )}
@@ -101,14 +109,14 @@ export default function SignUpForm({ onSwitch }) {
           type="password"
           {...register("confirm_password", {
             required: "Please confirm your password",
-            validate: (value) =>
-              value === password || "Passwords do not match",
+            validate: (value: string) =>
+              value === watch("password") || "Passwords do not match",
           })}
           placeholder="Confirm Password"
           className="bg-white w-full px-3 py-2 border rounded-full mb-1"
         />
         {errors.confirm_password && (
-          <p className=" text-sm mb-3">
+          <p className="text-sm mb-3">
             {errors.confirm_password.message}
           </p>
         )}
