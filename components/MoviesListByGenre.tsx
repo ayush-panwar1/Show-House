@@ -1,7 +1,8 @@
-// import { stringify } from "querystring";
 import { Suspense } from "react";
+import Link from "next/link";
 import MovieCard from "./movieCard";
-import Link from "next/link"
+import { getCache, setCache } from "@/lib/redis";
+
 type Movie = {
   id: number;
   title: string;
@@ -14,68 +15,132 @@ type TMDBResponse = {
   results: Movie[];
 };
 
+async function getMovies({
+  pageStart = "1",
+  genreId = "28",
+}: {
+  pageStart: string;
+  genreId: string;
+}): Promise<TMDBResponse> {
 
-async function getMovies({pageStart="1", genreId="28"}: {pageStart: string; genreId:string}): Promise<TMDBResponse> {
-  // const URL =
-  //   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+  const totalStart = performance.now();
 
+  const cacheKey = `tmdb:discover:${genreId}:page:${pageStart}`;
+
+  // -----------------------------
+  // Redis Lookup
+  // -----------------------------
+  const redisReadStart = performance.now();
+
+  const cached = await getCache<TMDBResponse>(cacheKey);
+
+  const redisReadTime = performance.now() - redisReadStart;
+
+  if (cached) {
+    console.log(`
+================== CACHE HIT ==================
+Key            : ${cacheKey}
+Redis Read     : ${redisReadTime.toFixed(2)} ms
+Total Time     : ${(performance.now() - totalStart).toFixed(2)} ms
+===============================================
+`);
+
+    return cached;
+  }
+
+  // -----------------------------
+  // Fetch from TMDB
+  // -----------------------------
   const URL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&primary_release_date.gte=1985-01-01&page=${pageStart}&sort_by=popularity.desc&with_genres=${genreId}`;
 
-    
-  // const URL =   "https://api.themoviedb.org/3/discover/movie?with_genres=28";
-  // console.log("TOKEN EXISTS:", process.env.TMDB_ACCESS_TOKEN);
-  if (!process.env.TMDB_ACCESS_TOKEN) {
-    throw new Error("TMDB_ACCESS_TOKEN is missing");
-  }
+  const apiStart = performance.now();
 
   const res = await fetch(URL, {
     headers: {
       accept: "application/json",
-      Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN?.trim()}`,
+      Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN!.trim()}`,
     },
-    next: { revalidate: 259200 }, // caching 
+    cache: "no-store",
   });
 
+  const apiTime = performance.now() - apiStart;
+
   if (!res.ok) {
-    console.log()
     throw new Error("Failed to fetch movies");
   }
 
-  return (res.json());
+  // -----------------------------
+  // Parse JSON
+  // -----------------------------
+  const parseStart = performance.now();
+
+  const data: TMDBResponse = await res.json();
+
+  const parseTime = performance.now() - parseStart;
+
+  // -----------------------------
+  // Redis Write
+  // -----------------------------
+  const redisWriteStart = performance.now();
+
+  await setCache(cacheKey, data, 60 * 60 * 4);
+
+  const redisWriteTime = performance.now() - redisWriteStart;
+
+  console.log(`
+================== CACHE MISS =================
+Key            : ${cacheKey}
+Redis Read     : ${redisReadTime.toFixed(2)} ms
+TMDB Fetch     : ${apiTime.toFixed(2)} ms
+JSON Parse     : ${parseTime.toFixed(2)} ms
+Redis Write    : ${redisWriteTime.toFixed(2)} ms
+Total Time     : ${(performance.now() - totalStart).toFixed(2)} ms
+===============================================
+`);
+
+  return data;
 }
 
-export default async function MoviesListByGenre({pageStart="1", genreId="28"}:{pageStart:string; genreId:string}) {
-  // let movieList: Movie[] =[];
+export default async function MoviesListByGenre({
+  pageStart = "1",
+  genreId = "28",
+}: {
+  pageStart: string;
+  genreId: string;
+}) {
+  const p1 = getMovies({
+    pageStart,
+    genreId,
+  });
 
-  // for(let i =0; i<2 ;i++){
-  //   const movieData= await getMovies({pageStart: String(Number(pageStart)+i), genreId:genreId});
-  //   movieList = [...movieList, ...movieData.results]
-  // }
+  const p2 = getMovies({
+    pageStart: String(Number(pageStart) + 1),
+    genreId,
+  });
 
-  const p1 = getMovies({pageStart, genreId});
-  const p2 = getMovies({pageStart: String(Number(pageStart) + 1), genreId});
-
-  // Fetch both pages at the exact same time
   const [data1, data2] = await Promise.all([p1, p2]);
+
   const movieList = [...data1.results, ...data2.results];
- 
 
   return (
     <div className="my-2">
-    {/* <h3 className="dark:text-blue-50 text-3xl align-content-center text-slate-800 m-0 font-bold">Top in Genre</h3> */}
-    <div className="flex  sm:flex-wrap align-center justify-center sm:gap-4 ">
+      <div className="flex sm:flex-wrap align-center justify-center sm:gap-4">
         <Suspense fallback={"Loading..."}>
-      {movieList.map((movie,idx) => (
-        <div key={movie.id+ "-" +idx} className="m-0 p-0">
-            <Link href={`/movie/${movie.id}`}  >
-              <MovieCard vote_average={movie.vote_average} id={movie.id} title={movie.title} poster_path={movie.poster_path} release_date={movie.release_date}/>
-
-            </Link>
-        </div>
-        
-      ))}
-      </Suspense>
-    </div>
+          {movieList.map((movie, idx) => (
+            <div key={`${movie.id}-${idx}`} className="m-0 p-0">
+              <Link href={`/movie/${movie.id}`}>
+                <MovieCard
+                  id={movie.id}
+                  title={movie.title}
+                  poster_path={movie.poster_path}
+                  release_date={movie.release_date}
+                  vote_average={movie.vote_average}
+                />
+              </Link>
+            </div>
+          ))}
+        </Suspense>
+      </div>
     </div>
   );
 }
