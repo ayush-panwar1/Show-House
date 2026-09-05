@@ -79,6 +79,7 @@ export async function GET(request: NextRequest) {
         `
         INSERT INTO users (email, first_name, last_name, google_id, username)
         VALUES ($1, $2, $3, $4, $5)
+        RETURNING id
         `,
         [email, firstName, lastName, googleId, email],
       );
