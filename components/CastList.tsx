@@ -23,24 +23,27 @@ export default function CastList({ cast }: { cast: Cast[] }) {
                         <div key={idx} className="flex flex-col p-0 m-0">
 
                             {/* DESKTOP VIEW: Hidden on mobile, flex on sm and up */}
-                            <div className="hidden sm:flex align-center justify-center flex-col w-[150px] mt-3  h-[230px]">
-                                
-                                <Image
-                                    src={`https://image.tmdb.org/t/p/w200/${c.profile_path}`}
-                                    alt={c.name}
-                                    width={150}
-                                    height={180}
-                                    placeholder="blur"
-                                    blurDataURL="/person_placeholder.jpg"
-                                    className="m-0 w-[150px] h-[180px] rounded-lg object-cover"
-                                />
-                               
-                                <div className="mt-2 text-[14px] leading-tight font-mono text-slate-700 dark:text-slate-300">
-                                    <span className="font-bold">{c.name}</span>
-                                    <br />
-                                    <span className="text-xs opacity-80">{c.character}</span>
+                            <div className="hidden sm:flex flex-col items-start justify-start w-[150px] h-[230px] mt-3">
+                                    <Image
+                                        src={`https://image.tmdb.org/t/p/w200/${c.profile_path}`}
+                                        alt={c.name}
+                                        width={145}
+                                        height={170}
+                                        placeholder="blur"
+                                        blurDataURL="/person_placeholder.jpg"
+                                        className="block w-[150px] h-[180px] shrink-0 rounded-lg object-cover"
+                                    />
+
+                                    <div className="mt-2 w-full text-[14px] leading-tight font-mono text-slate-700 dark:text-slate-300">
+                                        <span className="font-bold break-words">{c.name}</span>
+                                        <br />
+                                        <span className="text-xs opacity-80 break-words">
+                                            {c.character?.length > 18
+                                                ? `${c.character.slice(0, 18)}...`
+                                                : c.character}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
 
                             {/* MOBILE VIEW: Block on mobile, hidden on sm and up */}
                             <div className="sm:hidden">

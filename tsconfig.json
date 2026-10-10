@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/user/page.tsx", "app/api/search/caching.js"  ],
+, "app/user/page.tsx", "app/api/search/caching.js", "components/push_to_db.cjs"  ],
   "exclude": ["node_modules"]
 }

@@ -5,6 +5,7 @@ import MovieCollectionList from "@/components/MovieListByCollection";
 import TrailerBtn from "@/components/MovieTrailerBtn";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import WatchlistButton from "@/components/WatchlistButton";
 import type { Metadata } from "next";
 
 type Genre = {
@@ -210,6 +211,12 @@ export default async function MovieDetail({ params }: PageProps) {
                 <RatingBox rating={detail.vote_average} />
               </div>
 
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                      <WatchlistButton
+                        movieId={detail.id}
+                        movieTitle={detail.title}
+                      />
+                    </div>
               <TrailerBtn movieId={detail.id} />
             </div>
           </div>

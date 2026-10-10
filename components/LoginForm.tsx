@@ -1,3 +1,6 @@
+
+"use client";
+
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import GoogleOauth from "./GoogleOauth";
@@ -9,10 +12,15 @@ type LoginFormInputs = {
 
 type LoginFormProps = {
   onSwitch: () => void;
+  onLoginSuccess: () => Promise<void>;
 };
 
-export default function LoginForm({ onSwitch }: LoginFormProps) {
+export default function LoginForm({
+  onSwitch,
+  onLoginSuccess,
+}: LoginFormProps) {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -32,6 +40,7 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "same-origin",
         body: JSON.stringify({
           email: data.email,
           password: data.password,
@@ -49,6 +58,8 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
         alert(result.error || "SignIn failed");
         return;
       }
+
+      await onLoginSuccess();
     } catch (err) {
       console.error("SignIn error:", err);
       alert("Something went wrong");
@@ -66,7 +77,10 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
         </h2>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex flex-col items-center"
+      >
         <input
           {...register("email", { required: "Email required" })}
           placeholder="Email"
@@ -75,12 +89,18 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
 
         <input
           type="password"
-          {...register("password", { required: "Password required" })}
+          {...register("password", {
+            required: "Password required",
+          })}
           placeholder="Password"
           className="bg-white w-full px-3 py-2 border rounded-full mb-4"
         />
 
-        <button type="submit" className="custom_pill_box mb-5" style={{ width: "192px" }}>
+        <button
+          type="submit"
+          className="custom_pill_box mb-5"
+          style={{ width: "192px" }}
+        >
           Sign In
         </button>
       </form>
@@ -88,7 +108,9 @@ export default function LoginForm({ onSwitch }: LoginFormProps) {
       <GoogleOauth />
 
       <div className="mt-6 flex flex-row gap-2 items-center bg-[#fafafa] rounded-full p-2">
-        <p className="text-sm text-gray-500">{'Don\'t have an account?'}</p>
+        <p className="text-sm text-gray-500">
+          {"Don't have an account?"}
+        </p>
         <button
           onClick={onSwitch}
           className="text-[#48ACC8] font-bold hover:underline cursor-pointer"

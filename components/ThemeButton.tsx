@@ -27,16 +27,19 @@ export default function ThemeToggle() {
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
-      setLogoPath("/moon-logo.png");
+      setLogoPath("/bedtime_icon.svg");
     }
   }, [dark]);
 
   return (
-    <button
-      onClick={() => setDark(!dark)}
-      className="px-1 hover:pb-3 py-0  rounded-full cursor-pointer"
-      style={{ height: "40px", width: "40px" }}
-    >
+  
+          <button
+        onClick={() => setDark(!dark)}
+        className="px-1 py-0 rounded-full cursor-pointer
+                  transition-transform duration-300 ease-in-out
+                  hover:-translate-y-1 hover:scale-110"
+        style={{ height: "40px", width: "40px" }}
+      >
       <Image
         src={logoPath}
         alt="Toggle Theme"

@@ -1,5 +1,8 @@
+
 "use client";
+
 import Image from "next/image";
+
 function GoogleOauth() {
   function handleSignup() {
     const params = new URLSearchParams({
@@ -11,13 +14,20 @@ function GoogleOauth() {
       display: "popup",
     });
 
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
+    window.location.href =
+      `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
   }
 
   return (
     <div>
-      <button className="cursor-pointer custom_pill_box" onClick={handleSignup}>
-        <div className="hidden md:block me-2">Continue with Google</div>
+      <button
+        type="button"
+        className="cursor-pointer custom_pill_box"
+        onClick={handleSignup}
+      >
+        <div className="hidden md:block me-2">
+          Continue with Google
+        </div>
 
         <Image
           src="/google-logo.png"
@@ -25,8 +35,7 @@ function GoogleOauth() {
           width={35}
           height={35}
           style={{ height: "35px", width: "35px" }}
-          // className="object-contain"
-        ></Image>
+        />
       </button>
     </div>
   );
